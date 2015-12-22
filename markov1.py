@@ -2,20 +2,6 @@ from random import choice
 import sys
 import os
 
-print '''  
-___  ___           _                                           
-|  \/  |          | |                                          
-| .  . | __ _ _ __| | _______   __   __ _  ___ _ __   ___  ___ 
-| |\/| |/ _` | '__| |/ / _ \ \ / /  / _` |/ _ \ '_ \ / _ \/ _ \
-| |  | | (_| | |  |   < (_) \ V /  | (_| |  __/ | | |  __/  __/
-\_|  |_/\__,_|_|  |_|\_\___/ \_/    \__, |\___|_| |_|\___|\___|
-                                     __/ |                     
-                                    |___/                      
-'''
-
-print "A very simple random markov text gneerator."
-print "Here e'd use him as a poet"
-
 def generateModel(text, order):
     model = {}
     for i in range(0, len(text) - order):
@@ -45,20 +31,17 @@ def generateText(text, order, length):
         output += newCharacter
         currentFragment = currentFragment[1:] + newCharacter
     
-    print " "    
-    print "----------------------------- generated speech ------------------------------- \n"
-    print output + "\n"
-    print "------------------------------------------------------------------------------ \n"
+    # print " "    
+    # print "----------------------------- generated speech ------------------------------- \n"
+    # print output + "\n"
+    # print "------------------------------------------------------------------------------ \n"
 
-    speakIt(output)
-
-    
-def speakIt(corpus):
-  speak_cmd = "espeak " + "-a 20 " + "\"" + corpus + "\""
-  os.system(speak_cmd)
+    poem_file = open("/mnt/sda1/arduino/Poet/poem.txt", "w")
+    poem_file.write(output)
+    poem_file.close()
 
 # text = "some sample text"
-raw_data = open('corpus.txt', 'r')
+raw_data = open("/mnt/sda1/arduino/Poet/corpus.txt", 'r')
 text = raw_data.read()
 
 if __name__ == "__main__":

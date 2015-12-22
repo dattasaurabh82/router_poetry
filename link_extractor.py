@@ -1,29 +1,11 @@
 import os
 import subprocess
 
-print '''
- _     _       _      _   _             _            
-| |   (_)     | |    | | | |           | |           
-| |    _ _ __ | | __ | |_| |_   _ _ __ | |_ ___ _ __ 
-| |   | | '_ \| |/ / |  _  | | | | '_ \| __/ _ \ '__|
-| |___| | | | |   <  | | | | |_| | | | | ||  __/ |   
-|_____/_|_| |_|_|\_\ |_| |_/\__,_|_| |_|\__\___|_|   
-                                                     
-
-'''
-print '''
------------------------------------------------------------------------------------------------------------------ 
-|  I'm first trying to find the links of the servers and few websites that I can access from your browsing data |
-|  that was captured. I'll take some time as my processor is very slow. I'm going to run late don't worry just  |
-|  hold tight.                                                                                                  |
------------------------------------------------------------------------------------------------------------------
-'''
-
 # You can extend this list as you go ..
 domain_array = ['.com', '.org', '.net', '.int', '.gov', '.mil', '.uk']
 link_list = []
 
-pcap_data_txt = open('data.txt', 'r')
+pcap_data_txt = open('/mnt/sda1/arduino/Poet/data.txt', 'r')
 raw_pcap_data = pcap_data_txt.read().replace('\n', '')
 # print (raw_pcap_data) # print the actual content
 
@@ -54,21 +36,38 @@ for index in range (len(domain_array)):
         # --------- Putting data in a list
         link_list.append(first_recon_links)
 
-link_list = list(set(link_list)) # for removing duplicates
-print link_list
-#------- --------------------- --------To do Now ---- -----------------------#
-# Run a loop through the list and for each link open it in libreOffice or Lynx and append the result in a txt file.  
-# Thus creating all the content of the html from all the links in a single txt file.
 
-# This will be a corpus. 
-# 
-# #--------------------------------------------------------------------------#
+link_list = list(set(link_list)) # for removing duplicates
+
+
+# Removing links with multiple dots. 
+# They became faulty reconstructions and needs to be removed
+# BTW they already exists and unique links so we won't exclude any links at all.
+rm_index_list = []
+for i in range(len(link_list)):
+  dot_count = link_list[i].count(".")
+  if dot_count > 2:
+    # storing index valus themselves in a list for later operations
+    rm_index_list.append(i)  
+# print rm_index_list
+for index in sorted(rm_index_list, reverse=True):
+  del link_list[index]
+
+print link_list
+
+#---------------------------------------------------------------------------------#
+#
+# Run a loop through the list and for each link open it in libreOffice or Lynx and
+# append the result in a txt file. Thus creating all the content of the html from
+# all the links in a single txt file. This will be a corpus.
+#
+#--==------------------------------------------------------------------------------#
 #                            ||
 #                            \/
 for k in range(len(link_list)):
   #print link_list[k]
   # writing the links to a text file
-  link_file = open("links.txt", "a")
+  link_file = open("/mnt/sda1/arduino/Poet/links.txt", "a")
   link_file.write(link_list[k] + '\n')
   link_file.close()
 
