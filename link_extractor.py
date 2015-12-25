@@ -53,6 +53,7 @@ for i in range(len(link_list)):
 for index in sorted(rm_index_list, reverse=True):
   del link_list[index]
 
+
 print link_list
 
 #---------------------------------------------------------------------------------#
@@ -67,7 +68,7 @@ print link_list
 for k in range(len(link_list)):
   #print link_list[k]
   # writing the links to a text file
-  link_file = open("/mnt/sda1/arduino/Poet/links.txt", "a")
+  link_file = open('/mnt/sda1/arduino/Poet/links.txt', 'a')
   link_file.write(link_list[k] + '\n')
   link_file.close()
 
