@@ -36,7 +36,6 @@ for index in range (len(domain_array)):
         # --------- Putting data in a list
         link_list.append(first_recon_links)
 
-
 link_list = list(set(link_list)) # for removing duplicates
 
 
@@ -56,24 +55,23 @@ for index in sorted(rm_index_list, reverse=True):
 
 print link_list
 
-#---------------------------------------------------------------------------------#
-#
-# Run a loop through the list and for each link open it in libreOffice or Lynx and
-# append the result in a txt file. Thus creating all the content of the html from
-# all the links in a single txt file. This will be a corpus.
-#
-#--==------------------------------------------------------------------------------#
+#------- --------------------- --------To do Now ---- -----------------------#
+# Run a loop through the list and for each link open it in libreOffice or Lynx and append the result in a txt file.  
+# Thus creating all the content of the html from all the links in a single txt file.
+
+# This will be a corpus. 
+# 
+# #--------------------------------------------------------------------------#
 #                            ||
 #                            \/
 for k in range(len(link_list)):
   #print link_list[k]
   # writing the links to a text file
-  link_file = open('/mnt/sda1/arduino/Poet/links.txt', 'a')
+  link_file = open("links.txt", "a")
   link_file.write(link_list[k] + '\n')
   link_file.close()
 
 print "All the extracted links have been written to \"links.txt\" \n"
-
 
 
 
